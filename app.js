@@ -70,36 +70,41 @@
       };
     });
 
-    played.forEach(match => {
-      const home = stats[match.home_team_id];
-      const away = stats[match.away_team_id];
+  
+played.forEach(m => {
+  const h = stats[m.home_team_id];
+  const a = stats[m.away_team_id];
 
-      // No sumar a la clasificación partidos de equipos retirados.
-      if (!home || !away) return;
+  if (!h || !a) return;
 
-      home.pj++;
-      away.pj++;
+  // Todo partido jugado cuenta para partidos disputados y goles.
+  h.pj++;
+  a.pj++;
 
-      home.gf += match.home_score;
-      home.gc += match.away_score;
-      away.gf += match.away_score;
-      away.gc += match.home_score;
+  h.gf += m.home_score;
+  h.gc += m.away_score;
+  a.gf += m.away_score;
+  a.gc += m.home_score;
 
-      if (match.home_score > match.away_score) {
-        home.g++;
-        away.p++;
-        home.pts += 3;
-      } else if (match.home_score < match.away_score) {
-        away.g++;
-        home.p++;
-        away.pts += 3;
-      } else {
-        home.e++;
-        away.e++;
-        home.pts++;
-        away.pts++;
-      }
-    });
+  // Los partidos administrativos marcados no_points
+  // no conceden puntos ni alteran G/E/P.
+  if (m.no_points === true) return;
+
+  if (m.home_score > m.away_score) {
+    h.g++;
+    a.p++;
+    h.pts += 3;
+  } else if (m.home_score < m.away_score) {
+    a.g++;
+    h.p++;
+    a.pts += 3;
+  } else {
+    h.e++;
+    a.e++;
+    h.pts++;
+    a.pts++;
+  }
+});
 
     const ranking = Object.values(stats).sort(
       (a, b) =>
