@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Torneo folclórico | Página oficial</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+<header class="topbar"><a class="brand" href="index.html"><span class="ball">⚽</span> TORNEO <b>FOLCLÓRICO</b></a><nav><a href="#tabla">Posiciones</a><a href="#partidos">Partidos</a><a href="#equipos">Equipos</a><a class="login-link" href="admin.html">Administrar ↗</a></nav></header>
+<main>
+<section class="hero"><div class="hero-copy"><p class="eyebrow">PASIÓN · COMUNIDAD · FÚTBOL</p><h1>El torneo se vive<br><span>en la cancha.</span></h1><p>Consulta la clasificación, los resultados y la actualidad del Torneo folclórico desde un solo lugar.</p><a class="primary" href="#tabla">Ver clasificación <span>↓</span></a></div><div class="hero-art"><div class="orbit orbit1"></div><div class="orbit orbit2"></div><div class="big-ball">⚽</div><div class="hero-tag">TEMPORADA<br><strong>OFICIAL</strong></div></div></section>
+<section class="stats"><div><small>COMPETICIÓN</small><strong>Torneo folclórico</strong></div><div><small>FORMATO</small><strong>Fútbol local</strong></div><div><small>SEGUIMIENTO</small><strong>En vivo y actualizado</strong></div></section>
+<section id="tabla" class="section"><div class="section-heading"><div><p class="eyebrow">LA COMPETENCIA</p><h2>Tabla de posiciones</h2></div><span class="pill">Clasificación</span></div><div class="table-wrap"><table><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>DG</th><th>PTS</th></tr></thead><tbody id="standings"><tr><td colspan="10" class="empty">La clasificación aparecerá aquí cuando se carguen los datos oficiales.</td></tr></tbody></table></div></section>
+<section id="partidos" class="section"><div class="section-heading"><div><p class="eyebrow">CALENDARIO Y MARCADORES</p><h2>Partidos recientes</h2></div></div><div id="matches" class="match-grid"><article class="match-card empty-card">Los partidos y sus resultados se mostrarán en este espacio.</article></div></section>
+<section id="equipos" class="section"><div class="section-heading"><div><p class="eyebrow">LOS PROTAGONISTAS</p><h2>Equipos participantes</h2></div></div><div id="teams" class="team-grid"><article class="team-card">Los equipos oficiales se cargarán al importar la información del torneo.</article></div></section>
+<section class="notice"><div><p class="eyebrow">PÁGINA OFICIAL</p><h2>La información del torneo, siempre a mano.</h2><p>Comparte este enlace con jugadores, delegados y aficionados.</p></div><button class="secondary" onclick="navigator.clipboard?.writeText(location.href)">Copiar enlace</button></section>
+</main><footer><span>TORNEO FOLCLÓRICO</span><span>Portal público del campeonato</span></footer>
+<script src="config.js"></script><script src="app.js"></script>
+</body></html>
