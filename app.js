@@ -71,24 +71,31 @@
     });
 
   
+
 played.forEach(m => {
   const h = stats[m.home_team_id];
   const a = stats[m.away_team_id];
 
+  // Los partidos sin puntos cuentan como jugados,
+  // incluso si uno de los equipos se retiró.
+  if (m.no_points === true) {
+    if (h) h.pj++;
+    if (a) a.pj++;
+    return;
+  }
+
+  // Para los demás partidos, ambos equipos deben
+  // pertenecer a la clasificación actual.
   if (!h || !a) return;
 
-  // Todo partido jugado cuenta para partidos disputados y goles.
   h.pj++;
   a.pj++;
 
   h.gf += m.home_score;
   h.gc += m.away_score;
+
   a.gf += m.away_score;
   a.gc += m.home_score;
-
-  // Los partidos administrativos marcados no_points
-  // no conceden puntos ni alteran G/E/P.
-  if (m.no_points === true) return;
 
   if (m.home_score > m.away_score) {
     h.g++;
@@ -105,7 +112,6 @@ played.forEach(m => {
     a.pts++;
   }
 });
-
     const ranking = Object.values(stats).sort(
       (a, b) =>
         b.pts - a.pts ||
