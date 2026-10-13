@@ -72,46 +72,54 @@
 
   
 
+
 played.forEach(m => {
   const h = stats[m.home_team_id];
   const a = stats[m.away_team_id];
 
-  // Los partidos sin puntos cuentan como jugados,
-  // incluso si uno de los equipos se retiró.
+  // Partido sin puntos: cuenta como jugado para
+  // los equipos activos, pero no afecta goles ni puntos.
   if (m.no_points === true) {
     if (h) h.pj++;
     if (a) a.pj++;
     return;
   }
 
-  // Para los demás partidos, ambos equipos deben
-  // pertenecer a la clasificación actual.
-  if (!h || !a) return;
+  // Equipo local activo.
+  if (h) {
+    h.pj++;
+    h.gf += m.home_score;
+    h.gc += m.away_score;
 
-  h.pj++;
-  a.pj++;
+    if (m.home_score > m.away_score) {
+      h.g++;
+      h.pts += 3;
+    } else if (m.home_score < m.away_score) {
+      h.p++;
+    } else {
+      h.e++;
+      h.pts++;
+    }
+  }
 
-  h.gf += m.home_score;
-  h.gc += m.away_score;
+  // Equipo visitante activo.
+  if (a) {
+    a.pj++;
+    a.gf += m.away_score;
+    a.gc += m.home_score;
 
-  a.gf += m.away_score;
-  a.gc += m.home_score;
-
-  if (m.home_score > m.away_score) {
-    h.g++;
-    a.p++;
-    h.pts += 3;
-  } else if (m.home_score < m.away_score) {
-    a.g++;
-    h.p++;
-    a.pts += 3;
-  } else {
-    h.e++;
-    a.e++;
-    h.pts++;
-    a.pts++;
+    if (m.away_score > m.home_score) {
+      a.g++;
+      a.pts += 3;
+    } else if (m.away_score < m.home_score) {
+      a.p++;
+    } else {
+      a.e++;
+      a.pts++;
+    }
   }
 });
+    
     const ranking = Object.values(stats).sort(
       (a, b) =>
         b.pts - a.pts ||
