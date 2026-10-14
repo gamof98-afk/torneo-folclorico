@@ -20,3 +20,9 @@ NOTAS:
 - La clasificación mantiene la regla existente m.no_points === true.
 - El escudo de A son de tambo es una ilustración provisional porque no venía un logo de ese equipo en el documento.
 - El portal carga seis partidos recientes, igual que el app.js anterior.
+
+
+ACTUALIZACIÓN VISUAL
+- Se incorporó el logo recibido de Marimonda de la 29 en assets/equipos/marimondas-de-la-29.png.
+- La paleta visual ahora usa azul noche y dorado, con encabezado de tabla oscuro, filas superiores destacadas y puntos en insignias.
+- Se conserva la lógica de carga de Supabase y el cálculo de posiciones.
