@@ -53,8 +53,8 @@
 
     const ranking = Object.values(stats).sort((a,b) => b.pts-a.pts || (b.gf-b.gc)-(a.gf-a.gc) || b.gf-a.gf || a.name.localeCompare(b.name));
     document.querySelector("#standings").innerHTML = ranking.map((t,i) => `
-      <tr><td>${i+1}</td><td><span class="team-name-cell"><img class="team-logo" src="${teamLogo(t.name)}" alt="" loading="lazy"><span>${esc(t.name)}</span></span></td>
-      <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td><td>${t.gf}</td><td>${t.gc}</td><td>${t.gf-t.gc>0?"+":""}${t.gf-t.gc}</td><td>${t.pts}</td></tr>`).join("") ||
+      <tr class="rank-${i+1}"><td><span class="rank-number">${i+1}</span></td><td><span class="team-name-cell"><img class="team-logo" src="${teamLogo(t.name)}" alt="" loading="lazy"><span>${esc(t.name)}</span></span></td>
+      <td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td><td>${t.gf}</td><td>${t.gc}</td><td>${t.gf-t.gc>0?"+":""}${t.gf-t.gc}</td><td><span class="points-badge">${t.pts}</span></td></tr>`).join("") ||
       '<tr><td colspan="10" class="empty">Aún no hay equipos registrados.</td></tr>';
 
     document.querySelector("#teams").innerHTML = activeTeams.map(team => `
