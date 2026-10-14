@@ -1,0 +1,22 @@
+REDISEÑO DEL TORNEO FOLCLÓRICO
+================================
+
+Contenido:
+- index.html: nueva portada, secciones y jerarquía visual.
+- styles.css: diseño responsive para móvil, tablet y escritorio.
+- app.js: carga Supabase, clasificación, resultados y equipos con logos.
+- assets/equipos/: nueve logos extraídos del documento LOGOS EQUIPOS.docx y un escudo genérico para A son de tambo.
+
+ANTES DE PUBLICAR:
+1. Haz una copia de seguridad de los archivos actuales.
+2. Reemplaza index.html, styles.css y app.js por los de esta carpeta.
+3. Copia la carpeta assets/equipos/ completa al mismo nivel que index.html.
+4. NO reemplaces config.js: conserva las credenciales/configuración actuales.
+5. Conserva admin.html y cualquier otro archivo de administración existente.
+6. Prueba primero la página pública, la tabla, el calendario y el acceso a Administrar.
+
+NOTAS:
+- No cambia las tablas ni los datos de Supabase.
+- La clasificación mantiene la regla existente m.no_points === true.
+- El escudo de A son de tambo es una ilustración provisional porque no venía un logo de ese equipo en el documento.
+- El portal carga seis partidos recientes, igual que el app.js anterior.
