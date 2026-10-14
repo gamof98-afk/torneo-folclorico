@@ -1,20 +1,61 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Torneo folclórico | Página oficial</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#102f25">
+<meta name="description" content="Consulta la tabla de posiciones, los resultados y los equipos del Torneo Folclórico.">
+<title>Torneo Folclórico | Página oficial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<header class="topbar"><a class="brand" href="index.html"><span class="ball">⚽</span> TORNEO <b>FOLCLÓRICO</b></a><nav><a href="#tabla">Posiciones</a><a href="#partidos">Partidos</a><a href="#equipos">Equipos</a><a class="login-link" href="admin.html">Administrar ↗</a></nav></header>
-<main>
-<section class="hero"><div class="hero-copy"><p class="eyebrow">PASIÓN · COMUNIDAD · FÚTBOL</p><h1>El torneo se vive<br><span>en la cancha.</span></h1><p>Consulta la clasificación, los resultados y la actualidad del Torneo folclórico desde un solo lugar.</p><a class="primary" href="#tabla">Ver clasificación <span>↓</span></a></div><div class="hero-art"><div class="orbit orbit1"></div><div class="orbit orbit2"></div><div class="big-ball">⚽</div><div class="hero-tag">TEMPORADA<br><strong>OFICIAL</strong></div></div></section>
-<section class="stats"><div><small>COMPETICIÓN</small><strong>Torneo folclórico</strong></div><div><small>FORMATO</small><strong>Fútbol local</strong></div><div><small>SEGUIMIENTO</small><strong>En vivo y actualizado</strong></div></section>
-<section id="tabla" class="section"><div class="section-heading"><div><p class="eyebrow">LA COMPETENCIA</p><h2>Tabla de posiciones</h2></div><span class="pill">Clasificación</span></div><div class="table-wrap"><table><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>DG</th><th>PTS</th></tr></thead><tbody id="standings"><tr><td colspan="10" class="empty">La clasificación aparecerá aquí cuando se carguen los datos oficiales.</td></tr></tbody></table></div></section>
-<section id="partidos" class="section"><div class="section-heading"><div><p class="eyebrow">CALENDARIO Y MARCADORES</p><h2>Partidos recientes</h2></div></div><div id="matches" class="match-grid"><article class="match-card empty-card">Los partidos y sus resultados se mostrarán en este espacio.</article></div></section>
-<section id="equipos" class="section"><div class="section-heading"><div><p class="eyebrow">LOS PROTAGONISTAS</p><h2>Equipos participantes</h2></div></div><div id="teams" class="team-grid"><article class="team-card">Los equipos oficiales se cargarán al importar la información del torneo.</article></div></section>
-<section class="notice"><div><p class="eyebrow">PÁGINA OFICIAL</p><h2>La información del torneo, siempre a mano.</h2><p>Comparte este enlace con jugadores, delegados y aficionados.</p></div><button class="secondary" onclick="navigator.clipboard?.writeText(location.href)">Copiar enlace</button></section>
-</main><footer><span>TORNEO FOLCLÓRICO</span><span>Portal público del campeonato</span></footer>
+<header class="topbar">
+  <a class="brand" href="#inicio" aria-label="Torneo Folclórico, inicio"><span class="brand-ball">⚽</span><span class="brand-name">TORNEO <b>FOLCLÓRICO</b></span></a>
+  <nav aria-label="Navegación principal">
+    <a href="#tabla">Posiciones</a><a href="#partidos">Partidos</a><a href="#equipos">Equipos</a><a class="login-link" href="admin.html">Administrar <span aria-hidden="true">↗</span></a>
+  </nav>
+</header>
+<main id="inicio">
+  <section class="hero">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="live-dot"></span> PASIÓN · COMUNIDAD · FÚTBOL</p>
+      <h1>El torneo se vive<br><span>en la cancha.</span></h1>
+      <p class="hero-description">Toda la emoción del Torneo Folclórico: posiciones, resultados y los equipos que hacen grande esta fiesta deportiva.</p>
+      <div class="hero-actions"><a class="primary" href="#tabla">Ver clasificación <span>↓</span></a><a class="text-link" href="#partidos">Ver últimos partidos <span>↗</span></a></div>
+    </div>
+    <div class="hero-art" aria-hidden="true"><div class="sunburst"></div><div class="orbit orbit1"></div><div class="orbit orbit2"></div><div class="big-ball">⚽</div><div class="hero-tag"><small>TEMPORADA</small><strong>OFICIAL</strong></div><span class="confetti confetti-a"></span><span class="confetti confetti-b"></span><span class="confetti confetti-c"></span></div>
+    <div class="hero-bottom"><span>DEPORTE</span><i></i><span>IDENTIDAD</span><i></i><span>TRADICIÓN</span></div>
+  </section>
+  <section class="stats" aria-label="Información del torneo">
+    <div><span class="stat-icon">01</span><small>COMPETICIÓN</small><strong>Torneo folclórico</strong></div>
+    <div><span class="stat-icon">02</span><small>FORMATO</small><strong>Fútbol local</strong></div>
+    <div><span class="stat-icon">03</span><small>SEGUIMIENTO</small><strong>Datos actualizados</strong></div>
+  </section>
+  <section id="tabla" class="section standings-section">
+    <div class="section-heading"><div><p class="eyebrow">LA COMPETENCIA</p><h2>Tabla de posiciones</h2><p class="section-subtitle">Cada punto cuenta. Sigue de cerca la lucha por el liderato.</p></div><span class="pill"><span class="pill-dot"></span> Clasificación oficial</span></div>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>DG</th><th>PTS</th></tr></thead><tbody id="standings"><tr><td colspan="10" class="empty">Cargando clasificación oficial…</td></tr></tbody></table></div>
+    <p class="mobile-hint">Desliza la tabla horizontalmente para ver todas las estadísticas <span>↔</span></p>
+  </section>
+  <section id="partidos" class="section matches-section">
+    <div class="section-heading"><div><p class="eyebrow">CALENDARIO Y MARCADORES</p><h2>Partidos recientes</h2><p class="section-subtitle">Revive los resultados más recientes del campeonato.</p></div><span class="section-mark">ENCUENTROS</span></div>
+    <div id="matches" class="match-grid"><article class="match-card empty-card">Cargando partidos…</article></div>
+  </section>
+  <section id="equipos" class="section teams-section">
+    <div class="section-heading"><div><p class="eyebrow">LOS PROTAGONISTAS</p><h2>Equipos participantes</h2><p class="section-subtitle">Diez equipos. Una misma pasión.</p></div><span class="section-mark">LOS CLUBES</span></div>
+    <div id="teams" class="team-grid"><article class="team-card">Cargando equipos oficiales…</article></div>
+  </section>
+  <section class="notice"><div class="notice-icon">⚽</div><div class="notice-copy"><p class="eyebrow">PÁGINA OFICIAL</p><h2>El fútbol nos une. El folclor nos identifica.</h2><p>Comparte la emoción del torneo con jugadores, delegados y aficionados.</p></div><button class="secondary" id="copy-link" type="button">Copiar enlace <span>↗</span></button></section>
+</main>
+<footer><a class="footer-brand" href="#inicio">⚽ TORNEO FOLCLÓRICO</a><span>Hecho con pasión por el fútbol y la tradición.</span><a href="#inicio">Volver arriba ↑</a></footer>
 <script src="config.js"></script><script src="app.js"></script>
+<script>
+document.getElementById('copy-link')?.addEventListener('click', async function(){
+ try { await navigator.clipboard.writeText(location.href); this.innerHTML='¡Enlace copiado! ✓'; }
+ catch(e) { window.prompt('Copia el enlace del torneo:', location.href); }
+});
+</script>
 </body></html>
