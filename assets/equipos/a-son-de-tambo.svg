@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220">
+<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f5b324"/><stop offset="1" stop-color="#e94b35"/></linearGradient></defs>
+<path d="M100 8 L178 36 L168 127 Q151 178 100 207 Q49 178 32 127 L22 36Z" fill="#173d2c" stroke="#b8f36a" stroke-width="7"/>
+<path d="M100 24 L161 46 L152 124 Q138 161 100 185 Q62 161 48 124 L39 46Z" fill="none" stroke="#fff" stroke-width="3"/>
+<circle cx="100" cy="92" r="38" fill="url(#g)" stroke="#fff" stroke-width="4"/>
+<path d="M100 65 l13 10 -5 16 h-16 l-5 -16z M68 91 l13 -5 9 13 -7 14 -15 -4z M123 99 l13 -8 9 12 -8 13 -14 -3z M88 119 l12 -7 12 7 -4 14 h-16z" fill="#fff" stroke="#173d2c" stroke-width="2"/>
+<text x="100" y="158" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#fff">A SON DE</text>
+<text x="100" y="174" font-family="Arial,sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#b8f36a">TAMBO</text></svg>
