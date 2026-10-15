@@ -8,6 +8,75 @@
   const statusLabel=s=>s==='played'?'Jugado':s==='scheduled'?'Programado':s==='postponed'?'Aplazado':'Pendiente por programar';
   if(!configured||!window.supabase){['#standings','#teams','#matches','#all-matches'].forEach(s=>{if($(s))$(s).innerHTML='<p class="empty">Configura las credenciales de Supabase en config.js para cargar la información oficial.</p>'});return}
   const db=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey);
+    async function loadAwards() {
+    const container = document.querySelector("#home-awards");
+    if (!container) return;
+
+    const [playersRes, teamsRes] = await Promise.all([
+      db.from("players")
+        .select("id,name,goals,assists,team_id")
+        .order("name"),
+      db.from("teams")
+        .select("id,name")
+    ]);
+
+    if (playersRes.error || teamsRes.error) {
+      console.error("Error al cargar reconocimientos:", playersRes.error || teamsRes.error);
+      container.innerHTML = `
+        <article class="award-card">
+          <p>No fue posible cargar los reconocimientos.</p>
+        </article>`;
+      return;
+    }
+
+    const players = playersRes.data || [];
+    const teamMap = Object.fromEntries(
+      (teamsRes.data || []).map(team => [team.id, team.name])
+    );
+
+    function renderLeaders(field, title, icon, unit) {
+      const eligible = players
+        .map(player => ({
+          ...player,
+          total: Number(player[field] || 0)
+        }))
+        .filter(player => player.total > 0);
+
+      if (!eligible.length) {
+        return `
+          <article class="award-card">
+            <p class="award-kicker">${icon} ${title}</p>
+            <h3>Aún sin registros</h3>
+            <p class="award-description">Los datos aparecerán cuando se registren ${unit}.</p>
+          </article>`;
+      }
+
+      const highest = Math.max(...eligible.map(player => player.total));
+      const leaders = eligible.filter(player => player.total === highest);
+
+      return `
+        <article class="award-card">
+          <p class="award-kicker">${icon} ${title}</p>
+          ${leaders.map(player => `
+            <div class="award-leader">
+              <div class="award-player-icon" aria-hidden="true">${icon}</div>
+              <div class="award-player-info">
+                <h3>${esc(player.name)}</h3>
+                <p>${esc(teamMap[player.team_id] || "Equipo no disponible")}</p>
+              </div>
+              <strong class="award-total">
+                ${player.total}
+                <small>${unit}</small>
+              </strong>
+            </div>
+          `).join("")}
+        </article>`;
+    }
+
+    container.innerHTML =
+      renderLeaders("goals", "GOLEADOR DEL TORNEO", "⚽", "goles") +
+      renderLeaders("assists", "MÁXIMO ASISTENTE", "✦", "asistencias");
+  }
   async function load(){
     const [tr,mr]=await Promise.all([db.from('teams').select('*').order('name'),db.from('matches').select('*').order('match_date',{ascending:false,nullsFirst:false})]);
     if(tr.error||mr.error){console.error(tr.error||mr.error);return}
@@ -22,4 +91,7 @@
     if($('#all-matches')){$('#all-matches').innerHTML=matches.map(card).join('')||'<article class="match-card">Aún no hay partidos registrados.</article>';const apply=()=>{const s=$('#match-status-filter')?.value||'all',r=($('#match-round-filter')?.value||'').toLowerCase(),q=($('#match-team-filter')?.value||'').toLowerCase();$('#all-matches').querySelectorAll('.match-card').forEach(el=>{el.hidden=!(s==='all'||el.dataset.status===s)&&false;const okStatus=s==='all'||el.dataset.status===s;const okRound=!r||el.dataset.round.toLowerCase().includes(r);const okTeam=!q||el.dataset.home.includes(q)||el.dataset.away.includes(q);el.hidden=!(okStatus&&okRound&&okTeam)});};['#match-status-filter','#match-round-filter','#match-team-filter'].forEach(s=>$(s)?.addEventListener(s==='#match-team-filter'?'input':'change',apply));}
   }
   load();
+  loadAwards().catch(error => {
+    console.error("Error cargando reconocimientos:", error);
+  });
 })();
