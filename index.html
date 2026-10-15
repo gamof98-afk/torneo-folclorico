@@ -16,12 +16,7 @@
 <header class="topbar">
   <a class="brand" href="#inicio" aria-label="Torneo Folclórico, inicio"><span class="brand-ball">⚽</span><span class="brand-name">TORNEO <b>FOLCLÓRICO</b></span></a>
   <nav aria-label="Navegación principal">
-    <a href="#tabla">Posiciones</a>
-    <a href="#reconocimientos">Goleadores</a>
-    <a href="#partidos">Partidos</a>
-    <a href="#equipos">Equipos</a>
-    <a href="estadisticas.html">Estadísticas</a>
-    <a class="login-link" href="admin.html">Administrar <span aria-hidden="true">↗</span></a>
+    <a href="#tabla">Posiciones</a><a href="#partidos">Partidos</a><a href="#calendario">Calendario</a><a href="#equipos">Equipos</a><a class="login-link" href="admin.html">Administrar <span aria-hidden="true">↗</span></a>
   </nav>
 </header>
 <main id="inicio">
@@ -45,84 +40,46 @@
     <div class="table-wrap"><table><thead><tr><th>#</th><th>Equipo</th><th>PJ</th><th>G</th><th>E</th><th>P</th><th>GF</th><th>GC</th><th>DG</th><th>PTS</th></tr></thead><tbody id="standings"><tr><td colspan="10" class="empty">Cargando clasificación oficial…</td></tr></tbody></table></div>
     <p class="mobile-hint">Desliza la tabla horizontalmente para ver todas las estadísticas <span>↔</span></p>
   </section>
-    <section id="reconocimientos" class="section awards-section">
-    <div class="section-heading">
-      <div>
-        <p class="eyebrow">FIGURAS DEL CAMPEONATO</p>
-        <h2>Reconocimientos</h2>
-        <p class="section-subtitle">Los jugadores que se destacan frente al arco y en la creación de goles.</p>
-      </div>
-      <a class="awards-link" href="estadisticas.html">Ver estadísticas completas ↗</a>
-    </div>
-
-    <div id="home-awards" class="awards-grid">
-      <article class="award-card">
-        <p class="award-kicker">⚽ GOLEADOR DEL TORNEO</p>
-        <p class="award-loading">Cargando goleadores…</p>
-      </article>
-      <article class="award-card">
-        <p class="award-kicker">✦ MÁXIMO ASISTENTE</p>
-        <p class="award-loading">Cargando asistentes…</p>
-      </article>
-    </div>
-  </section>
   <section id="partidos" class="section matches-section">
-    <div class="section-heading"><div><p class="eyebrow">CALENDARIO Y MARCADORES</p><h2>Últimos partidos</h2><p class="section-subtitle">Consulta los últimos encuentros del campeonato.</p></div><span class="section-mark">ENCUENTROS</span></div>
+    <div class="section-heading"><div><p class="eyebrow">CALENDARIO Y MARCADORES</p><h2>Partidos recientes</h2><p class="section-subtitle">Revive los resultados más recientes del campeonato.</p></div><span class="section-mark">ENCUENTROS</span></div>
     <div id="matches" class="match-grid"><article class="match-card empty-card">Cargando partidos…</article></div>
   </section>
-  <div class="section-heading calendar-heading">
-  <div>
-    <p class="eyebrow">TEMPORADA COMPLETA</p>
-    <h2>Calendario e histórico</h2>
-    <p class="section-subtitle">
-      Consulta los partidos por jornada, estado o equipo.
-    </p>
-  </div>
-
-  <button
-    id="toggle-calendar"
-    class="secondary calendar-toggle"
-    type="button"
-    aria-expanded="false"
-    aria-controls="calendar-content"
-  >
-    Ver calendario <span id="calendar-toggle-icon">＋</span>
-  </button>
-</div>
-
-<div id="calendar-content" class="calendar-content" hidden>
-  <div class="calendar-filters">
-    <label>Estado
-      <select id="match-status-filter">
-        <option value="all">Todos los estados</option>
-        <option value="played">Jugados</option>
-        <option value="scheduled">Programados</option>
-        <option value="pending">Pendientes por programar</option>
-        <option value="postponed">Aplazados</option>
-      </select>
-    </label>
-
-    <label>Fecha o jornada
-      <select id="match-round-filter">
-        <option value="all">Todas las fechas</option>
-      </select>
-    </label>
-
-    <label>Equipo participante
-      <input
-        id="match-team-filter"
-        type="search"
-        placeholder="Buscar equipo"
-      >
-    </label>
-  </div>
-
-  <div id="all-matches" class="match-grid">
-    <article class="match-card empty-card">
-      Cargando el calendario completo…
-    </article>
-  </div>
-</div>
+  <section id="calendario" class="section calendar-section">
+    <div class="section-heading calendar-heading">
+      <div>
+        <p class="eyebrow">TODOS LOS ENCUENTROS</p>
+        <h2>Calendario e histórico</h2>
+        <p class="section-subtitle">Consulta los partidos por jornada, estado o equipo participante.</p>
+      </div>
+      <button id="toggle-calendar" class="secondary calendar-toggle" type="button" aria-expanded="false" aria-controls="calendar-content">
+        Ver calendario <span id="calendar-toggle-icon" aria-hidden="true">＋</span>
+      </button>
+    </div>
+    <div id="calendar-content" class="calendar-content" hidden>
+      <div class="calendar-filters">
+        <label for="match-status-filter">Estado del partido
+          <select id="match-status-filter">
+            <option value="all">Todos los estados</option>
+            <option value="played">Jugados</option>
+            <option value="scheduled">Programados</option>
+            <option value="pending">Pendientes</option>
+            <option value="postponed">Aplazados</option>
+          </select>
+        </label>
+        <label for="match-round-filter">Fecha o jornada
+          <select id="match-round-filter">
+            <option value="all">Todas las fechas</option>
+          </select>
+        </label>
+        <label for="match-team-filter">Equipo participante
+          <input id="match-team-filter" type="search" placeholder="Escribe el nombre del equipo" autocomplete="off">
+        </label>
+      </div>
+      <div id="all-matches" class="match-grid">
+        <article class="match-card empty-card">Cargando calendario…</article>
+      </div>
+    </div>
+  </section>
   <section id="equipos" class="section teams-section">
     <div class="section-heading"><div><p class="eyebrow">LOS PROTAGONISTAS</p><h2>Equipos participantes</h2><p class="section-subtitle">Diez equipos. Una misma pasión.</p></div><span class="section-mark">LOS CLUBES</span></div>
     <div id="teams" class="team-grid"><article class="team-card">Cargando equipos oficiales…</article></div>
