@@ -252,3 +252,160 @@ table{border-spacing:0;min-width:680px}thead th{background:#102849;color:#dce7f7
     width: 100%;
   }
 }
+
+
+/* =========================================
+   TABLAS RESPONSIVAS PARA CELULARES
+   ========================================= */
+
+@media (max-width: 600px) {
+
+  /* Evita que los contenedores se salgan de la pantalla */
+  .standings-section,
+  .profile-section,
+  .statistics-page {
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .table-wrap {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
+  }
+
+  /* Tabla de posiciones: mostrar todas las columnas */
+  .standings-section table {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+    font-size: 10px;
+  }
+
+  .standings-section thead th {
+    padding: 12px 3px;
+    font-size: 9px;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .standings-section tbody td {
+    padding: 13px 3px;
+    font-size: 10px;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* Anchos proporcionales de las columnas */
+  .standings-section th:nth-child(1),
+  .standings-section td:nth-child(1) {
+    width: 8%;
+    padding-left: 3px;
+  }
+
+  .standings-section th:nth-child(2),
+  .standings-section td:nth-child(2) {
+    width: 34%;
+    text-align: left;
+  }
+
+  .standings-section th:nth-child(n+3),
+  .standings-section td:nth-child(n+3) {
+    width: 6.44%;
+  }
+
+  .standings-section .team-name-cell {
+    min-width: 0;
+    gap: 5px;
+    overflow-wrap: anywhere;
+    font-size: 10px;
+  }
+
+  .standings-section .team-logo {
+    width: 24px;
+    height: 24px;
+    flex: 0 0 24px;
+  }
+
+  .standings-section th:first-child,
+  .standings-section td:first-child {
+    padding-left: 3px;
+  }
+
+  .standings-section .mobile-hint {
+    display: none;
+  }
+
+  /* Plantilla del equipo: nombres y estadísticas compactos */
+  .team-profile .profile-section table {
+    width: 100%;
+    min-width: 0;
+    table-layout: fixed;
+  }
+
+  .team-profile .profile-section thead th {
+    padding: 12px 3px;
+    font-size: 9px;
+    letter-spacing: 0;
+    text-align: center;
+    white-space: normal;
+  }
+
+  .team-profile .profile-section tbody td {
+    padding: 13px 3px;
+    font-size: 10px;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  /* Primera columna: nombre del jugador */
+  .team-profile .profile-section th:first-child,
+  .team-profile .profile-section td:first-child {
+    width: 32%;
+    padding-left: 7px;
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+
+  .team-profile .profile-section th:nth-child(2),
+  .team-profile .profile-section td:nth-child(2) {
+    width: 8%;
+  }
+
+  .team-profile .profile-section th:nth-child(3),
+  .team-profile .profile-section td:nth-child(3) {
+    width: 17%;
+  }
+
+  .team-profile .profile-section th:nth-child(n+4),
+  .team-profile .profile-section td:nth-child(n+4) {
+    width: 8.6%;
+  }
+
+  /* Estadísticas individuales */
+  .individual-stats-section table {
+    min-width: 0;
+    width: 100%;
+    table-layout: fixed;
+  }
+
+  .individual-stats-section th,
+  .individual-stats-section td {
+    padding: 12px 6px;
+    font-size: 10px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .individual-stats-section th:first-child,
+  .individual-stats-section td:first-child {
+    padding-left: 8px;
+  }
+}
+
