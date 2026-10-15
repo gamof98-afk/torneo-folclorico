@@ -95,12 +95,12 @@
       const teamFilter = $('#match-team-filter');
       const toggleButton = $('#toggle-calendar');
       const calendarContent = $('#calendar-content');
-      const toggleIcon = $('#calendar-toggle-icon');
     
       // Construye las opciones con las jornadas existentes.
       const rounds = [...new Set(
         matches
-          .map(m => String(m.round_name || '').trim())
+          .filter(m => m.status === 'played' && m.round_name)
+          .map(m => String(m.round_name).trim())
           .filter(Boolean)
       )].sort((a, b) =>
         a.localeCompare(b, 'es', {
