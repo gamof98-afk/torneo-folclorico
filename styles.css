@@ -409,3 +409,60 @@ table{border-spacing:0;min-width:680px}thead th{background:#102849;color:#dce7f7
   }
 }
 
+/* Calendario e histórico plegable */
+.calendar-heading {
+  align-items: center;
+}
+
+.calendar-toggle {
+  flex: 0 0 auto;
+  min-width: 180px;
+  justify-content: space-between;
+  background: #102849;
+  color: #fff;
+  border-color: #102849;
+}
+
+.calendar-toggle:hover {
+  background: #17385d;
+  border-color: #ffc928;
+}
+
+.calendar-toggle span {
+  color: #ffc928;
+  font-size: 20px;
+}
+
+.calendar-content[hidden] {
+  display: none !important;
+}
+
+.calendar-content:not([hidden]) {
+  animation: calendar-appear 0.22s ease-out;
+}
+
+@keyframes calendar-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.calendar-filters select {
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .calendar-heading {
+    align-items: stretch;
+  }
+
+  .calendar-toggle {
+    width: 100%;
+  }
+}
+
