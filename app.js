@@ -88,7 +88,108 @@
     if($('#teams'))$('#teams').innerHTML=active.map(t=>`<a class="team-card team-card-link" href="equipo.html?id=${encodeURIComponent(t.id)}"><img class="team-logo-large" src="${logo(t.name)}" alt="Escudo de ${esc(t.name)}"><div><strong>${esc(t.name)}</strong><p class="muted">${esc(t.short_name||'Ver plantilla y estadísticas')} · Ver equipo ↗</p></div></a>`).join('')||'<article class="team-card">Aún no hay equipos registrados.</article>';
     const card=m=>{const home=map[m.home_team_id]||'Por definir',away=map[m.away_team_id]||'Por definir',score=m.home_score!=null&&m.away_score!=null?`${m.home_score} : ${m.away_score}`:'VS';return `<article class="match-card" data-status="${esc(m.status||'pending')}" data-round="${esc(m.round_name||'')}" data-home="${esc(home.toLowerCase())}" data-away="${esc(away.toLowerCase())}"><p class="match-meta">${esc(m.round_name||'Fecha sin especificar')} · ${esc(date(m.match_date))}</p><div class="match-scoreline"><a class="match-side" href="equipo.html?id=${encodeURIComponent(m.home_team_id||'')}"><img src="${logo(home)}" alt=""><span>${esc(home)}</span></a><strong class="match-score">${score}</strong><a class="match-side" href="equipo.html?id=${encodeURIComponent(m.away_team_id||'')}"><img src="${logo(away)}" alt=""><span>${esc(away)}</span></a></div><span class="match-status">${statusLabel(m.status)}${m.no_points===true?' · Sin puntos':''}</span>${m.notes?`<p class="muted">${esc(m.notes)}</p>`:''}</article>`};
     if($('#matches'))$('#matches').innerHTML=matches.slice(0,6).map(card).join('')||'<article class="match-card">Aún no hay partidos registrados.</article>';
-    if($('#all-matches')){$('#all-matches').innerHTML=matches.map(card).join('')||'<article class="match-card">Aún no hay partidos registrados.</article>';const apply=()=>{const s=$('#match-status-filter')?.value||'all',r=($('#match-round-filter')?.value||'').toLowerCase(),q=($('#match-team-filter')?.value||'').toLowerCase();$('#all-matches').querySelectorAll('.match-card').forEach(el=>{el.hidden=!(s==='all'||el.dataset.status===s)&&false;const okStatus=s==='all'||el.dataset.status===s;const okRound=!r||el.dataset.round.toLowerCase().includes(r);const okTeam=!q||el.dataset.home.includes(q)||el.dataset.away.includes(q);el.hidden=!(okStatus&&okRound&&okTeam)});};['#match-status-filter','#match-round-filter','#match-team-filter'].forEach(s=>$(s)?.addEventListener(s==='#match-team-filter'?'input':'change',apply));}
+    if ($('#all-matches')) {
+      const allMatches = $('#all-matches');
+      const roundFilter = $('#match-round-filter');
+      const statusFilter = $('#match-status-filter');
+      const teamFilter = $('#match-team-filter');
+      const toggleButton = $('#toggle-calendar');
+      const calendarContent = $('#calendar-content');
+      const toggleIcon = $('#calendar-toggle-icon');
+    
+      // Construye las opciones con las jornadas existentes.
+      const rounds = [...new Set(
+        matches
+          .map(m => String(m.round_name || '').trim())
+          .filter(Boolean)
+      )].sort((a, b) =>
+        a.localeCompare(b, 'es', {
+          numeric: true,
+          sensitivity: 'base'
+        })
+      );
+    
+      if (roundFilter) {
+        roundFilter.innerHTML =
+          '<option value="all">Todas las fechas</option>' +
+          rounds.map(round =>
+            `<option value="${esc(round)}">${esc(round)}</option>`
+          ).join('');
+      }
+    
+      allMatches.innerHTML = matches.map(card).join('') ||
+        '<article class="match-card">Aún no hay partidos registrados.</article>';
+    
+      const matchCards = [...allMatches.querySelectorAll('.match-card')];
+    
+      // Busca la jornada más reciente que tenga al menos un partido jugado.
+      const latestPlayedMatch = matches.find(m =>
+        m.status === 'played' &&
+        m.round_name &&
+        m.match_date
+      );
+    
+      const latestPlayedRound = latestPlayedMatch
+        ? String(latestPlayedMatch.round_name).trim()
+        : '';
+    
+      // Si existe una última jornada jugada, se selecciona automáticamente.
+      // Si no hay partidos jugados, se muestran todos los encuentros.
+      if (roundFilter) {
+        roundFilter.value = latestPlayedRound
+          ? latestPlayedRound
+          : 'all';
+      }
+    
+      // Al cargar la página, el calendario permanece plegado.
+      if (calendarContent && toggleButton) {
+        calendarContent.hidden = true;
+        toggleButton.setAttribute('aria-expanded', 'false');
+      }
+    
+      if (toggleButton && calendarContent) {
+        toggleButton.addEventListener('click', () => {
+          const opening = calendarContent.hidden;
+    
+          calendarContent.hidden = !opening;
+          toggleButton.setAttribute('aria-expanded', String(opening));
+          toggleButton.innerHTML = opening
+            ? 'Ocultar calendario <span id="calendar-toggle-icon">−</span>'
+            : 'Ver calendario <span id="calendar-toggle-icon">＋</span>';
+        });
+      }
+    
+      const apply = () => {
+        const status = statusFilter?.value || 'all';
+        const round = roundFilter?.value || 'all';
+        const query = (teamFilter?.value || '').trim().toLowerCase();
+    
+        matchCards.forEach(el => {
+          const matchesStatus =
+            status === 'all' || el.dataset.status === status;
+    
+          const matchesRound =
+            round === 'all' || el.dataset.round === round;
+    
+          const matchesTeam =
+            !query ||
+            el.dataset.home.includes(query) ||
+            el.dataset.away.includes(query);
+    
+          el.hidden = !(
+            matchesStatus &&
+            matchesRound &&
+            matchesTeam
+          );
+        });
+      };
+    
+      statusFilter?.addEventListener('change', apply);
+      roundFilter?.addEventListener('change', apply);
+      teamFilter?.addEventListener('input', apply);
+    
+      apply();
+    }
   }
   load();
   loadAwards().catch(error => {
