@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#102849">
+  <meta name="description" content="Goleadores y máximos asistentes del Torneo Folclórico.">
+  <title>Estadísticas | Torneo Folclórico</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="index.html">
+      <span class="brand-ball">⚽</span>
+      <span class="brand-name">TORNEO <b>FOLCLÓRICO</b></span>
+    </a>
+
+    <nav aria-label="Navegación principal">
+      <a href="index.html#tabla">Posiciones</a>
+      <a href="index.html#reconocimientos">Goleadores</a>
+      <a href="index.html#partidos">Partidos</a>
+      <a href="index.html#equipos">Equipos</a>
+      <a href="estadisticas.html" aria-current="page">Estadísticas</a>
+    </nav>
+  </header>
+
+  <main class="statistics-page">
+    <section class="statistics-hero">
+      <p class="eyebrow">TEMPORADA OFICIAL</p>
+      <h1>Estadísticas del torneo</h1>
+      <p>Consulta quién lidera la tabla de goles y quiénes se destacan por sus asistencias.</p>
+    </section>
+
+    <section class="section awards-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">RECONOCIMIENTOS INDIVIDUALES</p>
+          <h2>Los protagonistas</h2>
+          <p class="section-subtitle">Datos tomados de las estadísticas acumuladas de cada jugador.</p>
+        </div>
+      </div>
+
+      <div id="statistics-awards" class="awards-grid">
+        <article class="award-card">Cargando estadísticas…</article>
+      </div>
+    </section>
+
+    <section class="section individual-stats-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">CLASIFICACIÓN INDIVIDUAL</p>
+          <h2>Tabla de goleadores y asistentes</h2>
+          <p class="section-subtitle">Todos los jugadores con sus cifras acumuladas.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Jugador</th>
+              <th>Equipo</th>
+              <th>Goles</th>
+              <th>Asistencias</th>
+            </tr>
+          </thead>
+          <tbody id="individual-stats">
+            <tr>
+              <td colspan="4" class="empty">Cargando jugadores…</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p class="mobile-hint">Desliza la tabla horizontalmente para ver todas las estadísticas ↔</p>
+    </section>
+
+    <div class="statistics-back">
+      <a class="primary" href="index.html">← Volver a la página principal</a>
+    </div>
+  </main>
+
+  <footer>
+    <a class="footer-brand" href="index.html">⚽ TORNEO FOLCLÓRICO</a>
+    <span>Hecho con pasión por el fútbol y la tradición.</span>
+    <a href="index.html#inicio">Volver al inicio ↑</a>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="estadisticas.js"></script>
+</body>
+</html>
