@@ -598,15 +598,30 @@
       }
 
       if (b.dataset.deleteMatch) {
-        const m = matches.find(x => String(x.id) === b.dataset.deleteMatch);
+        
+            if (b.dataset.deleteMatch) {
+              const m = matches.find(
+                x => String(x.id) === b.dataset.deleteMatch
+              );
+            
+              if (
+                m &&
+                confirm(
+                  "¿Eliminar este partido y todas sus estadísticas asociadas?"
+                )
+              ) {
+                const { error } = await db.rpc(
+                  "delete_match_and_stats",
+                  { p_match_id: m.id }
+                );
+            
+                if (error) throw error;
+            
+                notice("Partido y estadísticas eliminados correctamente.");
+                await refreshAll();
+              }
+            }
 
-        if (m && confirm("¿Eliminar este partido y las estadísticas asociadas?")) {
-          const { error } = await db.from("matches").delete().eq("id", m.id);
-          if (error) throw error;
-
-          notice("Partido eliminado.");
-          await refreshAll();
-        }
       }
     });
   });
