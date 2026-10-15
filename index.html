@@ -16,7 +16,7 @@
 <header class="topbar">
   <a class="brand" href="#inicio" aria-label="Torneo Folclórico, inicio"><span class="brand-ball">⚽</span><span class="brand-name">TORNEO <b>FOLCLÓRICO</b></span></a>
   <nav aria-label="Navegación principal">
-    <a href="#tabla">Posiciones</a><a href="#partidos">Partidos</a><a href="#equipos">Equipos</a><a class="login-link" href="admin.html">Administrar <span aria-hidden="true">↗</span></a>
+    <a href="#tabla">Posiciones</a><a href="#partidos">Partidos</a><a href="#calendario">Calendario</a><a href="#equipos">Equipos</a><a class="login-link" href="admin.html">Administrar <span aria-hidden="true">↗</span></a>
   </nav>
 </header>
 <main id="inicio">
@@ -41,8 +41,17 @@
     <p class="mobile-hint">Desliza la tabla horizontalmente para ver todas las estadísticas <span>↔</span></p>
   </section>
   <section id="partidos" class="section matches-section">
-    <div class="section-heading"><div><p class="eyebrow">CALENDARIO Y MARCADORES</p><h2>Partidos recientes</h2><p class="section-subtitle">Revive los resultados más recientes del campeonato.</p></div><span class="section-mark">ENCUENTROS</span></div>
+    <div class="section-heading"><div><p class="eyebrow">CALENDARIO Y MARCADORES</p><h2>Últimos partidos</h2><p class="section-subtitle">Consulta los últimos encuentros del campeonato.</p></div><span class="section-mark">ENCUENTROS</span></div>
     <div id="matches" class="match-grid"><article class="match-card empty-card">Cargando partidos…</article></div>
+  </section>
+  <section id="calendario" class="section matches-section">
+    <div class="section-heading"><div><p class="eyebrow">TEMPORADA COMPLETA</p><h2>Calendario e histórico</h2><p class="section-subtitle">Todos los encuentros jugados, programados y pendientes por programar.</p></div><span class="section-mark">TODAS LAS FECHAS</span></div>
+    <div class="calendar-filters">
+      <label>Estado<select id="match-status-filter"><option value="all">Todos los estados</option><option value="played">Jugados</option><option value="scheduled">Programados</option><option value="pending">Pendientes por programar</option><option value="postponed">Aplazados</option></select></label>
+      <label>Fecha o jornada<input id="match-round-filter" type="search" placeholder="Ej. Fecha 1"></label>
+      <label>Equipo participante<input id="match-team-filter" type="search" placeholder="Buscar equipo"></label>
+    </div>
+    <div id="all-matches" class="match-grid"><article class="match-card empty-card">Cargando el calendario completo…</article></div>
   </section>
   <section id="equipos" class="section teams-section">
     <div class="section-heading"><div><p class="eyebrow">LOS PROTAGONISTAS</p><h2>Equipos participantes</h2><p class="section-subtitle">Diez equipos. Una misma pasión.</p></div><span class="section-mark">LOS CLUBES</span></div>
