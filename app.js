@@ -5,6 +5,7 @@
   const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const logo=name=>{const n=String(name||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');if(n.includes('diablos'))return'assets/equipos/diablos-arlequines.png';if(n.includes('juliana'))return'assets/equipos/la-juliana.png';if(n.includes('reina'))return'assets/equipos/reina-de-la-cumbia.png';if(n.includes('monocucos'))return'assets/equipos/monocucos-puperos.png';if(n.includes('sabrosura'))return'assets/equipos/la-sabrosura.png';if(n.includes('marimonda'))return'assets/equipos/marimondas-de-la-29.png';if(n.includes('rumbon')||n.includes('runbon'))return'assets/equipos/rumbon-norteno.png';if(n.includes('mamapuerca')||n.includes('mama purca')||n.includes('mama puer'))return'assets/equipos/mamapuerca-biker.png';if(n.includes('dimension'))return'assets/equipos/dimension-plateada.png';return'assets/equipos/a-son-de-tambo.svg'};
   const date=d=>d?new Date(d+'T12:00:00').toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'}):'Fecha por definir';
+  const formatTime=t=>{if(!t)return'Sin definir';const parts=String(t).split(':');if(parts.length<2)return'Sin definir';const h=Number(parts[0]),m=Number(parts[1]);if(!Number.isInteger(h)||!Number.isInteger(m)||h<0||h>23||m<0||m>59)return'Sin definir';return new Date(2000,0,1,h,m).toLocaleTimeString('es-CO',{hour:'numeric',minute:'2-digit',hour12:true}).replace(/\./g,'').toLowerCase();};
   const statusLabel=s=>s==='played'?'Jugado':s==='scheduled'?'Programado':s==='postponed'?'Aplazado':'Pendiente por programar';
   if(!configured||!window.supabase){['#standings','#teams','#matches','#all-matches'].forEach(s=>{if($(s))$(s).innerHTML='<p class="empty">Configura las credenciales de Supabase en config.js para cargar la información oficial.</p>'});return}
   const db=window.supabase.createClient(cfg.supabaseUrl,cfg.supabaseAnonKey);
@@ -86,7 +87,7 @@
     const ranking=Object.values(stats).sort((a,b)=>b.pts-a.pts||(b.gf-b.gc)-(a.gf-a.gc)||b.gf-a.gf||a.name.localeCompare(b.name));
     if($('#standings'))$('#standings').innerHTML=ranking.map((t,i)=>`<tr class="rank-${i+1}"><td><span class="rank-number">${i+1}</span></td><td><a class="team-name-cell team-link" href="equipo.html?id=${encodeURIComponent(t.id)}"><img class="team-logo" src="${logo(t.name)}" alt=""><span>${esc(t.name)}</span></a></td><td>${t.pj}</td><td>${t.g}</td><td>${t.e}</td><td>${t.p}</td><td>${t.gf}</td><td>${t.gc}</td><td>${t.gf-t.gc>0?'+':''}${t.gf-t.gc}</td><td><span class="points-badge">${t.pts}</span></td></tr>`).join('')||'<tr><td colspan="10" class="empty">Aún no hay equipos registrados.</td></tr>';
     if($('#teams'))$('#teams').innerHTML=active.map(t=>`<a class="team-card team-card-link" href="equipo.html?id=${encodeURIComponent(t.id)}"><img class="team-logo-large" src="${logo(t.name)}" alt="Escudo de ${esc(t.name)}"><div><strong>${esc(t.name)}</strong><p class="muted">${esc(t.short_name||'Ver plantilla y estadísticas')} · Ver equipo ↗</p></div></a>`).join('')||'<article class="team-card">Aún no hay equipos registrados.</article>';
-    const card=m=>{const home=map[m.home_team_id]||'Por definir',away=map[m.away_team_id]||'Por definir',score=m.home_score!=null&&m.away_score!=null?`${m.home_score} : ${m.away_score}`:'VS';return `<article class="match-card" data-status="${esc(m.status||'pending')}" data-round="${esc(m.round_name||'')}" data-home="${esc(home.toLowerCase())}" data-away="${esc(away.toLowerCase())}"><p class="match-meta">${esc(m.round_name||'Fecha sin especificar')} · ${esc(date(m.match_date))}</p><div class="match-scoreline"><a class="match-side" href="equipo.html?id=${encodeURIComponent(m.home_team_id||'')}"><img src="${logo(home)}" alt=""><span>${esc(home)}</span></a><strong class="match-score">${score}</strong><a class="match-side" href="equipo.html?id=${encodeURIComponent(m.away_team_id||'')}"><img src="${logo(away)}" alt=""><span>${esc(away)}</span></a></div><span class="match-status">${statusLabel(m.status)}${m.no_points===true?' · Sin puntos':''}</span>${m.notes?`<p class="muted">${esc(m.notes)}</p>`:''}</article>`};
+    const card=m=>{const home=map[m.home_team_id]||'Por definir',away=map[m.away_team_id]||'Por definir',score=m.home_score!=null&&m.away_score!=null?`${m.home_score} : ${m.away_score}`:'VS';return `<article class="match-card" data-status="${esc(m.status||'pending')}" data-round="${esc(m.round_name||'')}" data-home="${esc(home.toLowerCase())}" data-away="${esc(away.toLowerCase())}"><p class="match-meta">${esc(m.round_name||'Fecha sin especificar')} · ${esc(date(m.match_date))} · Hora: ${esc(formatTime(m.match_time))}</p><div class="match-scoreline"><a class="match-side" href="equipo.html?id=${encodeURIComponent(m.home_team_id||'')}"><img src="${logo(home)}" alt=""><span>${esc(home)}</span></a><strong class="match-score">${score}</strong><a class="match-side" href="equipo.html?id=${encodeURIComponent(m.away_team_id||'')}"><img src="${logo(away)}" alt=""><span>${esc(away)}</span></a></div><span class="match-status">${statusLabel(m.status)}${m.no_points===true?' · Sin puntos':''}</span>${m.notes?`<p class="muted">${esc(m.notes)}</p>`:''}</article>`};
     if($('#matches'))$('#matches').innerHTML=matches.slice(0,6).map(card).join('')||'<article class="match-card">Aún no hay partidos registrados.</article>';
     if ($('#all-matches')) {
       const allMatches = $('#all-matches');
@@ -95,12 +96,12 @@
       const teamFilter = $('#match-team-filter');
       const toggleButton = $('#toggle-calendar');
       const calendarContent = $('#calendar-content');
+      const toggleIcon = $('#calendar-toggle-icon');
     
       // Construye las opciones con las jornadas existentes.
       const rounds = [...new Set(
         matches
-          .filter(m => m.status === 'played' && m.round_name)
-          .map(m => String(m.round_name).trim())
+          .map(m => String(m.round_name || '').trim())
           .filter(Boolean)
       )].sort((a, b) =>
         a.localeCompare(b, 'es', {
